@@ -1,0 +1,49 @@
+<div>
+    <h1>計算機</h1>
+    <p>※計算結果は10億の桁まで表示されます</p>
+    <p>※計算結果は小数点第8位まで表示されます</p>
+    <p>※上枠には入力値、下枠には計算結果が表示されます</p>
+    <style>
+      h1 {
+        font-size : 35px;
+      }
+      p {
+        font-size : 12px;
+      }
+    </style>
+  </div>
+  
+  <div>
+   <div class="calculator">
+     <div class="display">
+       <input type="text" [value]="display" disabled />
+     </div>
+     <div class="result">
+       <input type="text" [value]="result" disabled />
+     </div>
+    </div>
+     <div class="buttons">
+      <button (click)="onButtonClick('7')">7</button>
+      <button (click)="onButtonClick('8')">8</button>
+      <button (click)="onButtonClick('9')">9</button>
+      <button (click)="onButtonClick('÷')">÷</button>
+  
+      <button (click)="onButtonClick('4')">4</button>
+      <button (click)="onButtonClick('5')">5</button>
+      <button (click)="onButtonClick('6')">6</button>
+      <button (click)="onButtonClick('×')">×</button>
+  
+      <button (click)="onButtonClick('1')">1</button>
+      <button (click)="onButtonClick('2')">2</button>
+      <button (click)="onButtonClick('3')">3</button>
+      <button (click)="onButtonClick('-')">-</button>
+  
+      <button (click)="onButtonClick('0')">0</button>
+      <button (click)="onButtonClick('.')">.</button>
+      <button (click)="onButtonClick('=')">=</button>
+      <button (click)="onButtonClick('+')">+</button>
+  
+      <button (click)="onButtonClick('AC')">AC</button>
+      <button (click)="onButtonClick('DEL')">DEL</button>
+     </div>
+  </div>
