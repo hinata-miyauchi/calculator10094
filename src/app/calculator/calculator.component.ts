@@ -48,7 +48,7 @@ export class CalculatorComponent {
       throw new Error('Result exceeds 10 billion');
     }
     const roundedResult = result.toFixed(8);
-    return parseFloat(roundedResult).toString(); 
+    return Number(roundedResult).toString(); 
   }
 
   deleteLastCharacter() {
