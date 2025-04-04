@@ -1,3 +1,4 @@
+//こめんと
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalculatorComponent } from '../app/calculator/calculator.component'

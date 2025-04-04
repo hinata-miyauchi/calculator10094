@@ -15,3 +15,4 @@ import { CalculatorComponent } from './calculator/calculator.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+//こめんと
