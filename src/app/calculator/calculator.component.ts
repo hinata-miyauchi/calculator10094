@@ -70,6 +70,11 @@ export class CalculatorComponent {
       this.display += char; 
     }
 
+    if ((this.display.slice(-2,-1) === '×' || this.display.slice(-2,-1) === '÷'  || this.display.slice(-2,-1) === '+' || this.display.slice(-2,-1) === '-') 
+      && (this.display.slice(-1) === '0') && ((!this.isOperator(char)) && char !== '.')) {
+      return;
+    }
+
     if (char === '.') {
       const lastSegment = this.display.split(/[\+\-\×\÷]/).pop() || '';
       if (lastSegment.includes('.')) {
