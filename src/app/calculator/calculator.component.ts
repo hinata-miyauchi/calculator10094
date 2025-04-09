@@ -48,6 +48,8 @@ export class CalculatorComponent {
       this.display += char;
     } else if ((this.display.slice(-1) === '-') && (char === '-' || char === '.')) {
       return;
+    } else if ((this.display.slice(-1) === '.') && (char === '-')) {
+        return;
     }
 
     if (this.isOperator(this.display.slice(-1)) && char === '0' && this.display.slice(-2) === '0') {
