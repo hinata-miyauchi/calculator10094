@@ -34,11 +34,11 @@ export class CalculatorComponent {
       return;
     }
 
-    if (this.display === '0' && char !== '.') {
+    if (this.display === '0' && (char !== '.' && char !== '×' && char !== '÷' && char !== '+' && char !== '-')) {
       return;
     }
 
-    if (this.display === '' && (char === '.' || char === '×' || char === '÷')) {
+    if (this.display === '' && (char === '.' || char === '×' || char === '÷' || char === '+')) {
       return;
     }
 
