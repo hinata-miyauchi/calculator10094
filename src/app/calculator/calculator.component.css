@@ -1,11 +1,26 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
 .calculator {
     max-width: 265px;
-    margin: auto;
     font-family: 'Arial', sans-serif;
     border: 0px solid #000000;
     border-radius: 10px;
     padding: 10px;
-    background-color: #ffffff;
+}
+.flame {
+    max-width: 370px;
+    margin: auto;
+    height: 100%;
+    background-color: #3aa746;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .display{
@@ -26,7 +41,7 @@ input[type="text"] {
     text-align: center;
     border: 3px solid #000000;
     border-radius: 10px;
-    background-color: #cbdee0;
+    background-color: #83dee8;
     color: #333;
     font-weight: bold;
     box-sizing: border-box;
@@ -52,17 +67,28 @@ input[type="text"]:focus {
     gap: 10px;
 }
 
+.operator {
+    background-color: #f1ea28;
+}
+
+.delete {
+    background-color: #f73838;
+}
+
 button {
     width: 80px;
     height: 70px;
     resize: none;
     padding: 20px;
-    font-size: 18px;
+    font-size: 25px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button:hover {

@@ -8,12 +8,11 @@
       }
       p {
         text-align:center;
-        font-size : 12px;
+        font-size : 15px;
       }
     </style>
 </div>
-  
-  <div>
+<div class="flame">
    <div class="calculator">
      <div class="display">
        <input type="text" [value]="display" disabled />
@@ -26,24 +25,25 @@
       <button (click)="onButtonClick('7')">7</button>
       <button (click)="onButtonClick('8')">8</button>
       <button (click)="onButtonClick('9')">9</button>
-      <button (click)="onButtonClick('÷')">÷</button>
+      <button class="operator" (click)="onButtonClick('÷')">÷</button>
   
       <button (click)="onButtonClick('4')">4</button>
       <button (click)="onButtonClick('5')">5</button>
       <button (click)="onButtonClick('6')">6</button>
-      <button (click)="onButtonClick('×')">×</button>
+      <button class="operator"(click)="onButtonClick('×')">×</button>
   
       <button (click)="onButtonClick('1')">1</button>
       <button (click)="onButtonClick('2')">2</button>
       <button (click)="onButtonClick('3')">3</button>
-      <button (click)="onButtonClick('-')">-</button>
+      <button class="operator"(click)="onButtonClick('-')">-</button>
   
       <button (click)="onButtonClick('0')">0</button>
       <button (click)="onButtonClick('.')">.</button>
-      <button (click)="onButtonClick('=')">=</button>
-      <button (click)="onButtonClick('+')">+</button>
+      <button class="operator"(click)="onButtonClick('=')">=</button>
+      <button class="operator"(click)="onButtonClick('+')">+</button>
   
-      <button (click)="onButtonClick('AC')">AC</button>
-      <button (click)="onButtonClick('DEL')">DEL</button>
+      <button class="delete"(click)="onButtonClick('AC')">AC</button>
+      <button class="delete"(click)="onButtonClick('DEL')">DEL</button>
      </div>
   </div>
+</div>

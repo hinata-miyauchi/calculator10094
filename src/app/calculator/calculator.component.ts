@@ -133,7 +133,12 @@ export class CalculatorComponent {
   }
 
   deleteLastCharacter(): void {
-    this.display = this.display.slice(0, -1);
+    if (this.display.length > 1) {
+      this.display = this.display.slice(0, -1);
+    } else {
+      this.display = '';
+      this.result = '';
+    }
   }
 
   isDigit(char: string): boolean {
