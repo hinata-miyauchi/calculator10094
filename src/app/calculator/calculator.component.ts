@@ -135,6 +135,7 @@ export class CalculatorComponent {
   deleteLastCharacter(): void {
     if (this.display.length > 1) {
       this.display = this.display.slice(0, -1);
+      this.result = '';
     } else {
       this.display = '';
       this.result = '';
