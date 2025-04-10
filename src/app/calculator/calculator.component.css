@@ -27,12 +27,43 @@ body {
 
 .display{
     text-align: center;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
+}
+
+.scrollable-box {
+    width: 132%;
+    height: 70px;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+    border: 3px solid #000000;
+    border-radius: 10px;
+    background-color: #83dee8;
+    color: #333;
+    font-weight: bold;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+  
+.scrollable-box::-webkit-scrollbar {
+    height: 8px; /* スクロールバーの高さ */
+}
+  
+.scrollable-box::-webkit-scrollbar-thumb {
+    background: #4b84ff;
+    border-radius: 5px;
+}
+  
+.scrollable-box::-webkit-scrollbar-track {
+    background: #d0d9e4;
+    border-radius: 5px;
 }
 
 .result {
     text-align: center;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
 input[type="text"] {
@@ -56,12 +87,6 @@ input[type="text"] {
 input[type="text"]:focus {
     background-color: #f0f8ff; 
     border-color: #ffffff;
-}
-
-.result {
-    font-size: 35px;
-    font-weight: bold;
-    color: #4CAF50;
 }
 
 .buttons {

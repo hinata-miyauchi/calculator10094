@@ -36,6 +36,9 @@ export class CalculatorComponent {
     if ((this.display === '' && this.result === '') && this.disabledButtons.includes(buttonValue)){
       return true;
     }
+    if ((this.display.slice(-2,-1) === 'x' || this.display.slice(-2,-1) === '÷' || this.display.slice(-2,-1) === '+' || this.display.slice(-2,-1) === '-') && this.display.slice(-1) === '0' && buttonValue === '0' && this.result === '') {
+      return true;
+    }
     return false;
   }
 

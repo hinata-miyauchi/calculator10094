@@ -18,10 +18,10 @@
 <div class="flame">
    <div class="calculator">
      <div class="display">
-       <input type="text" [value]="display" disabled class="scrollable" />
+       <div class="scrollable-box" #displayBox>{{ display }}</div>
      </div>
      <div class="result">
-       <input type="text" [value]="result" disabled class="scrollable" />
+     <input type="text" [value]="result" disabled class="scrollable" />
      </div>
 
      <div class="buttons">
