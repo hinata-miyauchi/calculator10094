@@ -18,32 +18,33 @@
 <div class="flame">
    <div class="calculator">
      <div class="display">
-       <input type="text" [value]="display" disabled />
+       <input type="text" [value]="display" disabled class="scrollable" />
      </div>
      <div class="result">
-       <input type="text" [value]="result" disabled />
+       <input type="text" [value]="result" disabled class="scrollable" />
      </div>
 
      <div class="buttons">
-      <button (click)="onButtonClick('7')">7</button>
-      <button (click)="onButtonClick('8')">8</button>
-      <button (click)="onButtonClick('9')">9</button>
-      <button class="operator" (click)="onButtonClick('÷')">÷</button>
+         
+      <button (click)="onButtonClick('7')" [disabled]="isButtonDisabled('7')">7</button>
+      <button (click)="onButtonClick('8')" [disabled]="isButtonDisabled('8')">8</button>
+      <button (click)="onButtonClick('9')" [disabled]="isButtonDisabled('9')">9</button>
+      <button class="operator" (click)="onButtonClick('÷')" [disabled]="isButtonDisabled('÷')">÷</button>
   
-      <button (click)="onButtonClick('4')">4</button>
-      <button (click)="onButtonClick('5')">5</button>
-      <button (click)="onButtonClick('6')">6</button>
-      <button class="operator"(click)="onButtonClick('×')">×</button>
+      <button (click)="onButtonClick('4')" [disabled]="isButtonDisabled('4')">4</button>
+      <button (click)="onButtonClick('5')" [disabled]="isButtonDisabled('5')">5</button>
+      <button (click)="onButtonClick('6')" [disabled]="isButtonDisabled('6')">6</button>
+      <button class="operator"(click)="onButtonClick('×')" [disabled]="isButtonDisabled('×')">×</button>
   
-      <button (click)="onButtonClick('1')">1</button>
-      <button (click)="onButtonClick('2')">2</button>
-      <button (click)="onButtonClick('3')">3</button>
-      <button class="operator"(click)="onButtonClick('-')">-</button>
+      <button (click)="onButtonClick('1')" [disabled]="isButtonDisabled('1')">1</button>
+      <button (click)="onButtonClick('2')" [disabled]="isButtonDisabled('2')">2</button>
+      <button (click)="onButtonClick('3')" [disabled]="isButtonDisabled('3')">3</button>
+      <button class="operator"(click)="onButtonClick('-')" [disabled]="isButtonDisabled('-')">-</button>
   
-      <button (click)="onButtonClick('0')">0</button>
-      <button (click)="onButtonClick('.')">.</button>
-      <button class="operator"(click)="onButtonClick('=')">=</button>
-      <button class="operator"(click)="onButtonClick('+')">+</button>
+      <button (click)="onButtonClick('0')" [disabled]="isButtonDisabled('0')">0</button>
+      <button (click)="onButtonClick('.')" [disabled]="isButtonDisabled('.')">.</button>
+      <button class="operator"(click)="onButtonClick('=')" [disabled]="isButtonDisabled('=')">=</button>
+      <button class="operator"(click)="onButtonClick('+')" [disabled]="isButtonDisabled('+')">+</button>
   
       <button class="delete"(click)="onButtonClick('AC')">AC</button>
       <button class="delete"(click)="onButtonClick('DEL')">DEL</button>

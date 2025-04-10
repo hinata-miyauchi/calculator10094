@@ -103,3 +103,9 @@ button:active {
     background-color: #c03d3d;
     transform: scale(0.98);
 }
+
+button:disabled {
+    background-color: #dcdcdc; /* 無効なボタンの色 */
+    cursor: not-allowed; /* 無効なボタンのカーソル */
+    opacity: 0.5; /* 少し透明にして無効であることを強調 */
+  }

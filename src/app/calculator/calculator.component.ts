@@ -10,13 +10,45 @@ export class CalculatorComponent {
   result: string = '';
   maxDigits: number = 10;
   maxDecimalDigits: number = 8;
+  disabledButtons: string[] = ['+', '×', '÷', '=', '.'];
+  disabledNumberButtons: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+  isButtonDisabled(buttonValue: string): boolean {
+    if (this.result.includes("Error") && this.disabledButtons.includes(buttonValue)) {
+      return true;
+    }
+    if (this.isOperator(this.display.slice(-1)) && this.disabledButtons.includes(buttonValue)) {
+      return true;
+    }
+    if ((this.display.slice(-1) === '-' || this.display.slice(-1) === '.') && buttonValue === '-') {
+      return true;
+    }
+    const lastSegment = this.display.split(/[\+\-\×\÷]/).pop() || '';
+    if (lastSegment.includes('.') && buttonValue === '.') {
+    return true;
+    }
+    if (this.display =='0' && this.disabledNumberButtons.includes(buttonValue)) {
+      return true;
+    }
+    if (this.result.includes("Answer:") && (buttonValue === '.' || buttonValue === '=')) {
+      return true;
+    }
+    if ((this.display === '' && this.result === '') && this.disabledButtons.includes(buttonValue)){
+      return true;
+    }
+    return false;
+  }
 
   onButtonClick(buttonValue: string): void {
     if (buttonValue === '=') {
-      try {
-        this.result = 'Answer: ' + this.calculate(this.display);
-      } catch (error) {
-        this.result = 'Error';
+      if (this.display.slice(-1) !== '×' && this.display.slice(-1) !== '÷' && this.display.slice(-1) !== '+' && this.display.slice(-1) !== '-' && this.display.slice(-1) !== '.') {
+        try {
+          this.result = 'Answer: ' + this.calculate(this.display);
+        } catch (error) {
+          this.result = 'Error';
+        }
+      } else {
+        return;
       }
     } else if (buttonValue === 'AC') {
       this.display = '';
@@ -28,10 +60,36 @@ export class CalculatorComponent {
     }
   }
 
+
   handleInput(char: string): void {
     if (this.display === '' && char === '0') {
       this.display = '0';
       return;
+    }
+
+    if (this.result.includes("Answer:")) {
+      let match = this.result.match(/Answer:\s*(-?[\d.]+)/);
+      if (match && !isNaN(Number(match[1]))) {
+        if (this.isOperator(char)) {
+            this.display = match[1];
+            this.result = '';
+        } else {
+            this.display = '';
+            this.result = '';
+        }
+      }
+　　}
+
+    if (this.result.includes("Error")) {
+        if (!this.isOperator(char) && char !== '.') {
+            this.result = '';
+            this.display = '';
+        } else if (char === '-') {
+            this.display = '';
+            this.result = ''; 
+        } else if (this.isOperator(char)) {
+            return;
+        }
     }
 
     if (this.display === '0' && (char !== '.' && char !== '×' && char !== '÷' && char !== '+' && char !== '-')) {
