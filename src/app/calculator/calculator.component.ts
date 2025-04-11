@@ -66,6 +66,9 @@ export class CalculatorComponent {
     if ((this.display.slice(-2,-1) === '×' || this.display.slice(-2,-1) === '÷' || this.display.slice(-2,-1) === '+' || this.display.slice(-2,-1) === '-') && this.display.slice(-1) === '0' && buttonValue === '0' && this.result === '') {
       return true;
     }
+    if (this.display.slice(-1) === '0' && (this.display.slice(-2,-1) === '×' || this.display.slice(-2,-1) === '÷' || this.display.slice(-2,-1) === '+' || this.display.slice(-2,-1) === '-') && this.disabledNumberButtons.includes(buttonValue)) {
+      return true;
+    }
     if (!hasDecimal && integerPart.length >= this.maxDigits && this.disabledNumberButtons.includes(buttonValue)) {
       return true;
     }
@@ -235,8 +238,19 @@ export class CalculatorComponent {
   }
 
   hasZeroDivision(expression: string): boolean {
-    const zeroDivisionRegex = /\/\s*(-?(\+?)0(\.0+)?|[-+]?0(\.0+)?)\b/g;
-    return zeroDivisionRegex.test(expression);
+    const safeExpression = expression.replace(/×/g, '*').replace(/÷/g, '/');
+    const divisions = safeExpression.split('/').slice(1);
+  
+    for (let part of divisions) {
+      const match = part.trim().match(/^([-+]?[\d.]+)/);
+      if (match) {
+        const value = parseFloat(match[1]);
+        if (value === 0) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   formatResult(result: number): string {
