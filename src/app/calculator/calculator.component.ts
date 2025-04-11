@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 
 @Component({
   selector: 'app-calculator',
@@ -13,8 +13,36 @@ export class CalculatorComponent {
   disabledButtons: string[] = ['+', '×', '÷', '=', '.'];
   disabledNumberButtons: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+  @ViewChild('displayBox') displayBox!: ElementRef;
+  @ViewChild('resultBox') resultBox!: ElementRef;
+
+  ngAfterViewChecked(): void {
+    this.scrollDisplayToRight();
+    this.scrollResultToRight();
+  }
+
+  scrollDisplayToRight(): void {
+    if (this.displayBox && this.displayBox.nativeElement) {
+      const el = this.displayBox.nativeElement;
+      el.scrollLeft = el.scrollWidth;
+    }
+  }
+
+  scrollResultToRight(): void {
+    if (this.resultBox && this.resultBox.nativeElement) {
+      const el = this.resultBox.nativeElement;
+      el.scrollLeft = el.scrollWidth;
+    }
+  }
+
   isButtonDisabled(buttonValue: string): boolean {
-    if (this.result.includes("Error") && this.disabledButtons.includes(buttonValue)) {
+    const lastSegment = this.display.split(/[\+\-\×\÷]/).pop() || '';
+    const hasDecimal = lastSegment.includes('.');
+    const [integerPart, decimalPart = ''] = lastSegment.split('.');
+    if (this.result.includes("Error") && (buttonValue !== 'DEL' && buttonValue !== 'AC')) {
+      return true;
+    }
+    if (this.result.includes("Answer:") && this.disabledNumberButtons.includes(buttonValue)) {
       return true;
     }
     if (this.isOperator(this.display.slice(-1)) && this.disabledButtons.includes(buttonValue)) {
@@ -23,7 +51,6 @@ export class CalculatorComponent {
     if ((this.display.slice(-1) === '-' || this.display.slice(-1) === '.') && buttonValue === '-') {
       return true;
     }
-    const lastSegment = this.display.split(/[\+\-\×\÷]/).pop() || '';
     if (lastSegment.includes('.') && buttonValue === '.') {
     return true;
     }
@@ -39,6 +66,12 @@ export class CalculatorComponent {
     if ((this.display.slice(-2,-1) === '×' || this.display.slice(-2,-1) === '÷' || this.display.slice(-2,-1) === '+' || this.display.slice(-2,-1) === '-') && this.display.slice(-1) === '0' && buttonValue === '0' && this.result === '') {
       return true;
     }
+    if (!hasDecimal && integerPart.length >= this.maxDigits && this.disabledNumberButtons.includes(buttonValue)) {
+      return true;
+    }
+    if (hasDecimal && decimalPart.length >= this.maxDecimalDigits && this.disabledNumberButtons.includes(buttonValue)) {
+      return true;
+    }
     return false;
   }
 
@@ -47,8 +80,8 @@ export class CalculatorComponent {
       if (this.display.slice(-1) !== '×' && this.display.slice(-1) !== '÷' && this.display.slice(-1) !== '+' && this.display.slice(-1) !== '-' && this.display.slice(-1) !== '.') {
         try {
           this.result = 'Answer: ' + this.calculate(this.display);
-        } catch (error) {
-          this.result = 'Error';
+        } catch (error: any) {
+          this.result = 'Error: ' + (error.message || 'Invalid expression');
         }
       } else {
         return;
@@ -59,7 +92,11 @@ export class CalculatorComponent {
     } else if (buttonValue === 'DEL') {
       this.deleteLastCharacter();
     } else {
+      try {
       this.handleInput(buttonValue);
+    } catch (error: any) {
+      this.result = 'Error: ' + (error.message || 'Invalid input');
+      }
     }
   }
 
@@ -158,10 +195,10 @@ export class CalculatorComponent {
       if (lastSegment.includes('.')) {
         const decimalPart = lastSegment.split('.')[1] || '';
         if (decimalPart.length >= this.maxDecimalDigits) {
-          throw new Error('Decimal places exceed 8 digits');
+          throw new Error('小数点は最大8桁まで');
         }
       } else if (lastSegment.length >= this.maxDigits) {
-        throw new Error('Input exceeds 10 digits');
+        throw new Error('最大10億の桁まで');
       }
 
       this.display += char;
@@ -174,17 +211,32 @@ export class CalculatorComponent {
     try {
       const result = this.evaluateExpression(expression);
       return this.formatResult(result);
-    } catch (e) {
-      throw new Error('Invalid expression');
+    } catch (e: any) {
+      if (e.message === 'Result exceeds 10 billion') {
+        throw new Error('±100億未満までしか表示不可');
+      } else if (e.message === 'Cannot divide by zero') {
+        throw new Error('0では割れない');
+      } else {
+        throw new Error('Invalid expression');
+      }
     }
   }
 
   evaluateExpression(expression: string): number {
     expression = expression.replace(/×/g, '*').replace(/÷/g, '/');
 
+    if (this.hasZeroDivision(expression)) {
+      throw new Error('Cannot divide by zero');
+  }
+
     expression = expression.replace(/(?<=\d)-/g, ' -');
 
     return eval(expression);
+  }
+
+  hasZeroDivision(expression: string): boolean {
+    const zeroDivisionRegex = /\/\s*(-?(\+?)0(\.0+)?|[-+]?0(\.0+)?)\b/g;
+    return zeroDivisionRegex.test(expression);
   }
 
   formatResult(result: number): string {
