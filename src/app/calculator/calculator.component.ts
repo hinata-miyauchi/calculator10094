@@ -39,7 +39,7 @@ export class CalculatorComponent {
     const lastSegment = this.display.split(/[\+\-\×\÷]/).pop() || '';
     const hasDecimal = lastSegment.includes('.');
     const [integerPart, decimalPart = ''] = lastSegment.split('.');
-    if (this.result.includes("Error") && (buttonValue !== 'DEL' && buttonValue !== 'AC')) {
+    if (this.result.includes("Error") && (buttonValue !== 'DEL' && buttonValue !== 'AC' && buttonValue !== 'CE')) {
       return true;
     }
     if (this.result.includes("Answer:") && this.disabledNumberButtons.includes(buttonValue)) {
@@ -94,6 +94,30 @@ export class CalculatorComponent {
       this.result = '';
     } else if (buttonValue === 'DEL') {
       this.deleteLastCharacter();
+    } else if (buttonValue === 'CE') {
+      const tokens = this.display.match(/([+\-×÷])|(\d*\.\d+|\d+)/g);
+      if (!tokens) return;
+      const last = tokens[tokens.length - 1];
+
+      if (last && /^[\d.]+$/.test(last)) {
+        const prev = tokens[tokens.length - 2];
+        const prevPrev = tokens[tokens.length - 3];
+
+        if (tokens.length === 2 && (prev === '-')) {
+          tokens.splice(-2, 2);
+        }
+        if ((prev === '-') && (prevPrev === '+' || prevPrev === '×' || prevPrev === '÷')) {
+          tokens.splice(-2, 2);
+        } else {
+          tokens.pop();
+        }
+      this.display = tokens.join('');
+
+      } else if (/^[+\-×÷]$/.test(last)) {
+        tokens.pop();
+        this.display = tokens.join('');
+      } 
+      this.result = '';
     } else {
       try {
       this.handleInput(buttonValue);
