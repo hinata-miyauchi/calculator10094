@@ -45,9 +45,9 @@
       <button class="operator"(click)="onButtonClick('=')" [disabled]="isButtonDisabled('=')">=</button>
       <button class="operator"(click)="onButtonClick('+')" [disabled]="isButtonDisabled('+')">+</button>
   
-      <button class="delete"(click)="onButtonClick('AC')">AC</button>
-      <button class="delete"(click)="onButtonClick('CE')">CE</button>
-      <button class="delete"(click)="onButtonClick('DEL')">DEL</button>
+      <button class="delete"(click)="onButtonClick('AC')" [disabled]="isButtonDisabled('AC')">AC</button>
+      <button class="delete"(click)="onButtonClick('CE')" [disabled]="isButtonDisabled('CE')">CE</button>
+      <button class="delete"(click)="onButtonClick('DEL')" [disabled]="isButtonDisabled('DEL')">DEL</button>
      </div>
   </div>
 </div>

@@ -75,6 +75,9 @@ export class CalculatorComponent {
     if (hasDecimal && decimalPart.length >= this.maxDecimalDigits && this.disabledNumberButtons.includes(buttonValue)) {
       return true;
     }
+    if (this.display === '' && ['CE', 'AC', 'DEL'].includes(buttonValue)) {
+      return true;
+    }
     return false;
   }
 
